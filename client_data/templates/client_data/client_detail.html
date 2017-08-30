@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block body_block %}
+  <div class="jumbotron">
+    <h2>Client Details:</h2>
+    {# <p>Id: {{client.id}}</p>#}
+    <p>Name: {{client.first_name}} {{client.last_name}}</p>
+    <p>Address: {{client.street_address}}, {{client.zipcode}}</p>
+    <p>Email: {{client.email_address}}</p>
+    <p>Phone: Home: {{client.home_phone}} Cell: {{client.cell_phone}}</p>
+    <p>Notes: {{client.notes}}</p>
+    <p>Dogs: </p>
+    {% for dog in client.dog.all %}
+    <p><a href= '{% url 'dog-detail' pk=dog.id %}'>{{dog.name}}  {{dog.check_date}}</a></p>
+
+    {% endfor %}
+
+    <p><a class = 'btn btn-warning' href='{% url 'client-update' pk=client.id %}'>Update</a>
+    <a class = 'btn btn-default' href="{% url 'dog-add' %}">Add Dog</a></p>
+  </div>
+{% endblock %}

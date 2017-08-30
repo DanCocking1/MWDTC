@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block body_block %}
+<form class="" action="{{ action }}" method="post">
+  {% csrf_token %}
+<div class="jumbotron">
+  <table>
+      {{ form.as_table }}
+  </table>
+
+
+  <input class= "btn btn-warning" type="submit" name="" value="submit">
+</div>
+
+</form>
+
+{% endblock %}

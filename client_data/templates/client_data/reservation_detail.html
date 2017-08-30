@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block body_block %}
+<div class="jumbotron">
+  <p>Today's Date: {{reservation.todaysDate}}</p>
+  <h3>Reservation Details: </h3>
+  <p>Dog(s): {{reservation.dog}}  {% if dog2 != null  %}{{reservation.dog2}}
+    {% endif %} {% if dog3 != null %} {{reservation.dog3}}{% endif %}</p>
+  <p>Owner: {{reservation.owner}}</p>
+  <p>Check in Date: {{reservation.check_in}}</p>
+  <p>Checkout Date: {{reservation.check_out}}</p>
+  {% if bathDate != null %} <p>Bath on: {{reservation.bathDate}}</p> {% endif %}
+</div>
+
+{% endblock %}

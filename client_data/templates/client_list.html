@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block body_block %}
+  <div class="jumbotron">
+    <h2>Clients</h2>
+    <div class="table-responsive">
+      <table class='table-hover table-striped' width=100%>
+        {% for client in object_list %}
+        <tr>
+          <td><h4><a href="{{client.id}}"> {{ client.first_name }} {{ client.last_name }} </a></h4></td>
+          <td><h4>{{client.home_phone}}</h4></td><td><h4>{{client.cell_phone}}</h4></td>
+        </tr>
+
+        {% endfor %}
+      </table>
+    </div>
+
+
+
+    <a class= "btn btn-danger" href = '/add/'>Add Client</a>
+  </div>
+{% endblock %}

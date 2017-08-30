@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block body_block %}
+<div class="jumbotron">
+  <table class = "table-striped" width=100%>
+  {% for dogClass in object_list %}
+
+      {% if dogClass.endDate > dogClass.today %}
+      <tr>
+        <td>
+      <a href="{{dogClass.id}}">{{dogClass.name}} </td><td> {{dogClass.startDate}}<h4></a></h4></td>{% endif %}
+
+  </tr>
+
+    {% endfor %}
+    </table>
+
+
+
+    <a class = 'btn btn-warning' href="{% url 'dog-class-add' %}">Add class</a></p>
+</div>
+{% endblock %}

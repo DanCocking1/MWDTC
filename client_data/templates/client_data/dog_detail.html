@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block body_block %}
+<div class="jumbotron">
+  <h3>Dog Details:</h3>
+  <p>Owner: {{dog.owner}}</p>
+  <p>Name: {{dog.name}}</p>
+  <p>Rabies Expiration Date: {{dog.rabies_date}}</p>
+  <p>Distemper Expiration Date: {{dog.distemper_date}}</p>
+  <p>Parvo Expiration Date: {{dog.parvo_date}}</p>
+  <p>Bordetello Expiration Date: {{dog.bordetello}}</p>
+  <p><strong>Vaccinations: {{dog.check_date}}</strong></p>
+  <p>Notes: {{dog.notes}}</p>
+<a class= 'btn btn-warning' href='{%  url "dog-update" pk=dog.id %}'>Update Dog</a>
+</div>
+
+{% endblock %}

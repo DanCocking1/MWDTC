@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block body_block %}
+<form class="" action="{{action}}" method="post">
+  <h3>Enroll a dog</h3>
+  {% csrf_token %}
+  {{form.as_p}}
+
+  <input class= "btn btn-warning" type="submit" name="" value="submit">
+
+</form>
+
+{% endblock %}

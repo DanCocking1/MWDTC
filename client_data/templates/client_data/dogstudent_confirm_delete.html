@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block body_block %}
+<form class="" action="/classes/" method="post">
+  {% csrf_token %}
+  <input class= 'btn btn-danger'type="submit" name="delete_student" value="Cancel Enrollment">
+  <a class = 'btn btn-success' href="/classes">Don't UnEnroll</a>
+
+</form>
+
+
+{% endblock %}

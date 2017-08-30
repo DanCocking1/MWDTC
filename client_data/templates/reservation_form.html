@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block body_block %}
+<div class="jumbotron">
+  <h2>Check On this</h2>
+
+    <form class="" action="{{action}}" method="post">
+      {% csrf_token %}
+      {{form.as_p}}
+    <input type="submit" name="" value="Make Reservation">
+    </form>
+</div>
+
+
+{% endblock %}

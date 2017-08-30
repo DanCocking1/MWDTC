@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+<div class="jumbotron">
+    <form class="" action="index.html" method="post">
+      {% csrf_token %}
+      {{form.as_p}}
+    <input type="submit" name="" value="Make Reservation">
+    </form>
+</div>

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block body_block %}
+<div class="jumbotron">
+<h2>Date: {{dayrunreservation.date}}</h2>
+<p>Available Runs: {{dayrunreservation.available_runs}}</p>
+{% for res in  dayrunreservation.reserve.all %}
+<p>{{res.res}}</p>
+
+
+{% endfor %}
+<a class = 'btn btn-success' href="/reservation/">List of all upcoming Reservations</a>
+  <p><a class ='btn btn-warning' href="/reservation/add/">Make a Reservation</a></p>
+
+</div>
+
+
+{% endblock %}

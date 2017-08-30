@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block body_block %}
+  <div class="jumbotron">
+    <p>Student's Information:</p>
+    <a href="{% url 'dog-detail' pk=dogstudent.dogId.id %}"><p>Dog: {{dogstudent.dogId}}</p></a>
+    <a href="{% url 'dogclass-detail' pk=dogstudent.classId.id %}"><p>Class Enrolled: {{dogstudent.classId}}</p></a>
+    <a href="{% url 'client-detail' pk=dogstudent.clientId.id %}"><p>Owner: {{dogstudent.clientId}}</p></a>
+    <a class = 'btn btn-success' href="/classes/">Go Back To classes</a>
+  </div>
+
+{% endblock %}
