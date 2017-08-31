@@ -4,7 +4,7 @@
 <h2>Date: {{dayrunreservation.date}}</h2>
 <p>Available Runs: {{dayrunreservation.available_runs}}</p>
 {% for res in  dayrunreservation.reserve.all %}
-<p>{{res.res}}</p>
+<p>{% if res.dogDayResCancelled == True %}{% else %}<p>{{res.res}}</p>{% endif %}
 
 
 {% endfor %}

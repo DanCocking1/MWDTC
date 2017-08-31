@@ -7,6 +7,7 @@ from django.views.generic import (TemplateView,ListView, UpdateView, CreateView,
 from .models import (Dog, Client, DogClass, DogStudent, DayRunReservation,
                         Reservation, DogDayRes)
 from .forms import DogForm, DogFormUpdate, MakeAReservationForm, PickADate
+from django.http import Http404
 
 # Create your views here.
 class ClientListView(LoginRequiredMixin, ListView):
@@ -143,6 +144,24 @@ class MakeAReservationView(LoginRequiredMixin, CreateView):
                     x.save()
 
                 else:
+                    if days == dateRes.check_in:
+                        raise Http404 #x would not have been created
+                    else:
+                        daysCancelling = []
+                        dateStart = dateRes.check_in
+                        while dateStart < days:
+                            daysCancelling.append(dateStart)
+                            datestart = datestart + datetime.timedelta(1)
+                        for daysToCancel in daysCancelling:
+                            j = DayRunReservation.objects.get(date=daysToCancel)
+                            j.save()
+                            j.CancelRes()
+                            j.save()
+                            try:
+                                k = DogDayRes.objects.get(res=dateRes, dayRun = j)
+                                k.dogDayResCancelled = True
+                            except:
+                                print ("Error finding reservation")
                     return super(MakeAReservationView, self).form_invalid(form)
             else:
                 i.save()

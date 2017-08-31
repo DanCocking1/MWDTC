@@ -149,6 +149,7 @@ class DayRunReservation (models.Model):
 class DogDayRes(models.Model):
     dayRun = models.ForeignKey(DayRunReservation, related_name='reserve')
     res = models.ForeignKey(Reservation)
+    dogDayResCancelled = models.BooleanField(default=False)
     def __str__ (self):
         return str(self.dayRun) + " " + str(self.res)
 
@@ -189,6 +190,7 @@ class DogStudent(models.Model):
     dogId = models.ForeignKey(Dog)
     clientId = models.ForeignKey(Client)
     classId = models.ForeignKey(DogClass, related_name='dogstudent')
+    cancelledEnrollment = models.BooleanField(default=False)
     def __str__(self):
         return str(self.dogId)
     def get_success_url(self):
