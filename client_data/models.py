@@ -122,6 +122,7 @@ class Reservation(models.Model):
 
 
 
+
 class DayRunReservation (models.Model):
     date = models.DateField(unique=True)
     available_runs = models.PositiveSmallIntegerField(default=30)
@@ -184,7 +185,7 @@ class DogClass(models.Model):
 
     def __str__ (self):
         return (self.name + " " + str(self.startDate) +
-         ' Slots Available ' + str(self.classSize - self.enrolled))
+         ' Slots Available:  ' + str(self.classSize - self.enrolled))
 
 class DogStudent(models.Model):
     dogId = models.ForeignKey(Dog)
