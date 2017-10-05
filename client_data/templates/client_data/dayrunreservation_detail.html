@@ -2,7 +2,12 @@
 {% block body_block %}
 <div class="jumbotron">
 <h2>Date: {{dayrunreservation.date}}</h2>
+{% if user.is_staff %}
 <p>Available Runs: {{dayrunreservation.available_runs}}</p>
+<p>Classes: {{ DayRunReservation.classes.startDate }}</p>
+{% else %}
+<p>{% if dayrunreservation.available_runs > 0 %}Runs Are Available!{% endif %}</p>
+{% endif %}
 {% for res in  dayrunreservation.reserve.all %}
 <p>{% if res.dogDayResCancelled == True %}{% else %}<p>{{res.res}}</p>{% endif %}
 

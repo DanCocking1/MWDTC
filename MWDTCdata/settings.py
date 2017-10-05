@@ -26,6 +26,13 @@ SECRET_KEY = 'xe=89@6%t7pux#u*b$vn5&u4+4u!2rwxvf8lxsrl@vflakurls'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'DanCocking'
+EMAIL_HOST_PASSWORD = 'cwg1pLPgKK4wka'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 ALLOWED_HOSTS = []
 
 
@@ -78,7 +85,7 @@ WSGI_APPLICATION = 'MWDTCdata.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'DanCocking.mysql.pythonanywhere-services.com',
+        'NAME': 'DanCocking$MWDTCdata',
         'USER': 'DanCocking',
         'PASSWORD': 'PHosfavlapafBo5',
         'HOST': 'DanCocking.mysql.pythonanywhere-services.com',

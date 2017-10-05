@@ -8,7 +8,10 @@
   <p>Owner: {{reservation.owner}}</p>
   <p>Check in Date: {{reservation.check_in}}</p>
   <p>Checkout Date: {{reservation.check_out}}</p>
-  {% if bathDate != null %} <p>Bath on: {{reservation.bathDate}}</p> {% endif %}
+  {% if reservation.bathDate != null %} <p>Bath on: {{reservation.bathDate}}</p>
+  {% else %} <p>No Bath on this Reservation</p>
+   {% endif %}
+
 </div>
 
 {% endblock %}

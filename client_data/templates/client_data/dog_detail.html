@@ -10,7 +10,11 @@
   <p>Bordetello Expiration Date: {{dog.bordetello}}</p>
   <p><strong>Vaccinations: {{dog.check_date}}</strong></p>
   <p>Notes: {{dog.notes}}</p>
+{% if user.is_staff %}
 <a class= 'btn btn-warning' href='{%  url "dog-update" pk=dog.id %}'>Update Dog</a>
+{% else %}
+<a class= 'btn btn-success' href='{%  url "dog-update-nonstaff" pk=dog.id %}'>Update Dog</a>
+{% endif %}
 </div>
 
 {% endblock %}

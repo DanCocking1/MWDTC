@@ -15,6 +15,12 @@
     {% endfor %}
 
     <p><a class = 'btn btn-warning' href='{% url 'client-update' pk=client.id %}'>Update</a>
-    <a class = 'btn btn-default' href="{% url 'dog-add' %}">Add Dog</a></p>
+    {% if user.is_staff %}
+    <a class = 'btn btn-danger' href="{% url 'dog-add' %}">Add Dog</a></p>
+    {% else %}
+    <a class = 'btn btn-danger'href="/dogaddnonstaff/">Add Your Dog(s)</a>
+
+    <p>Please note: All dog vaccination records will show out of date until a copy of records is recieved by staff.</p>
+    {% endif %}
   </div>
 {% endblock %}

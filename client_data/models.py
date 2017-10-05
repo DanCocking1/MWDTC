@@ -1,12 +1,15 @@
 from django.db import models
 import time
 from django.urls import reverse
+from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django import forms
 import datetime
 dayToCheck = datetime.date.today()
 numRuns = 15
 # Create your models here.
 class Client (models.Model):
+    created = models.ForeignKey(User, null=True, blank=True)
     last_name = models.CharField(max_length = 50)
     first_name = models.CharField(max_length = 50)
     street_address = models.CharField(max_length=150)
@@ -14,7 +17,7 @@ class Client (models.Model):
     zipcode = models.CharField(max_length=12)
     home_phone = models.CharField(max_length =12,blank=True)
     cell_phone = models.CharField(max_length =12, blank=True)
-    email_address = models.EmailField()
+    email_address = models.EmailField(unique=True)
     notes = models.TextField(max_length=512, blank=True, null=True)#for notes can be empty
 
     def __str__(self):
@@ -29,6 +32,7 @@ class Client (models.Model):
             verbose_name_plural = 'Clients'
 
 class Dog (models.Model):
+    created = models.ForeignKey(User, null=True, blank=True)
     name = models.CharField(max_length=256) #needed incase of long name e.g. AKC registered names
     owner = models.ForeignKey(Client,related_name='dog')#dogs owner, one owner can have multiple dogs
     breed = models.CharField(max_length=128)# allow long breed names/mixes of breeds
@@ -88,11 +92,8 @@ class Dog (models.Model):
             'pk':self.pk
         })
 
-
-
-
-
 class Reservation(models.Model):
+    created = models.ForeignKey(User, blank=True, null=True)
     owner = models.ForeignKey(Client)
     today = datetime.date.today()
     timePlus30 = today + datetime.timedelta(30)
@@ -160,10 +161,13 @@ class DogClass(models.Model):
     classSize = models.PositiveSmallIntegerField()
     startDate = models.DateField()
     endDate = models.DateField()
+    startTime = models.CharField(max_length=12, default='6 pm')
     dayOfTheWeek = models.CharField(max_length=16)
     enrolled = models.PositiveIntegerField(default=0)
+    privateClass = models.BooleanField(default = False)
+    enrollmentSlots = models.PositiveIntegerField(default=0)
     def showEnrollment(self):
-        return str(classSize - enrolled)
+        return (classSize - enrolled)
     def enrollDog(self):
         if self.classSize >= self.enrolled:
             self.enrolled += 1
@@ -187,7 +191,9 @@ class DogClass(models.Model):
         return (self.name + " " + str(self.startDate) +
          ' Slots Available:  ' + str(self.classSize - self.enrolled))
 
+
 class DogStudent(models.Model):
+    created = models.ForeignKey(User, null=True, blank=True)
     dogId = models.ForeignKey(Dog)
     clientId = models.ForeignKey(Client)
     classId = models.ForeignKey(DogClass, related_name='dogstudent')

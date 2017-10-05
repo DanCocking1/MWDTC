@@ -20,12 +20,26 @@
   <div class="container-fluid">
     <ul class='nav navbar-nav'>
       <li>
+          {% if user.is_staff %}
           <a class='navbar-brand'href="/"><img class= 'pull-left'src="{% static 'images/mdclogo3.png' %}" height='30' alt="Midewest Dog Training Center"></a>
           <div class="navbar-nav"></li>
             <li><a class='navbar-link'href="/clients/">Clients</a></li>
             <li><a class='navbar-link' href="/reservation/"> Reservations</a> </li>
             <li><a class ='navbar-link' href="/classes/">Classes</a></li>
             <li><a class = 'navbar-link' href='/admin/'>Admin</a><li>
+              {% else %}
+              <a class='navbar-brand'href="/"><img class= 'pull-left'src="{% static 'images/mdclogo3.png' %}" height='30' alt="Midewest Dog Training Center"></a>
+              <div class="navbar-nav"></li>
+              <li><a class='navbar-link' href="/reservation/"> Reservations</a> </li>
+              <li><a class ='navbar-link' href="/classes/">Classes</a></li>
+              {% endif %}
+              {% if user.is_staff %}
+            <li><a class = 'text-warning' href="/">Welcome {{user.username}}</a></li>
+              {% else %}
+            <li><a href="/">Welcome {{user.username}}</a></li>
+
+              {% endif %}
+
             {% if user.is_authenticated %}
               <li><a class = 'navbar-link navbar-right' href="/logout/">Logout</a></li>
             {% else %}

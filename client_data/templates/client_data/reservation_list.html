@@ -3,18 +3,24 @@
 <div class="jumbotron">
 <h2>Reservations in next 30 days from:</h2>
 
+{% if user.is_staff %}
    {% for  Reservation in object_list %}
   {% if  Reservation.thirtyDays %}<a href="{{Reservation.id}}"><p> Client: {{Reservation.owner}} Dog: {{Reservation.dog}}
-      Check in: {{Reservation.check_in}} Check out: {{Reservation.check_out}}</p></a> {% endif %}
+      Check in: {{Reservation.check_in}} Check out: {{Reservation.check_out}}</p></a> {% endif %} {% endfor %}{% endif %}
+
+      {% if  not user.is_staff %}
+         {% for  Reservation in object_list %}
+        {% if  Reservation.thirtyDays %}{% if Reservation.created == user %}<a href="{{Reservation.id}}"><p> Client: {{Reservation.owner}} Dog: {{Reservation.dog}}
+            Check in: {{Reservation.check_in}} Check out: {{Reservation.check_out}}</p></a> {% endif %}{% endif %} {% endfor %}{% endif %}
 
 
 
 
-    {% endfor %}
-
-
+{% if user.is_staff %}
 <a class = "btn btn-success" href="/reservation/add/">Create a Reservation</a>
-
+{% else %}
+<a class= 'btn btn-warning' href="/reservationnonstaff/add/">Create a Reservation for your dog(s)</a>
+{% endif %}
 </div>
 
 

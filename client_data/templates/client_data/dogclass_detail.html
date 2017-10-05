@@ -7,21 +7,26 @@
   <p>Last Day of Class: {{dogclass.endDate}}</p>
   <p>Class Size: {{dogclass.classSize}}</p>
   <p>Enrolled: {{dogclass.enrolled}}</p>
+    {%  if user.is_staff %}
   <p>Enrolled Students: </p>
   <table>
     {% for dogstudent in dogclass.dogstudent.all %}
     <tr>
       <td>  <a href= '{% url 'dogstudent-detail' pk=dogstudent.id %}'><h3>{{dogstudent.dogId}}  Owner: {{dogstudent.clientId}}</h3></a></td>
+
     </tr>
 
 
     {% endfor %}
+    {% endif %}
   </table>
 
 {% if dogclass.enrolled >= dogclass.classSize %}
     <a class= 'btn btn-danger disabled' href="/student/add/">Class Full</a>
-{% else %}
+{% elif user.is_staff %}
 <a class= 'btn btn-success active' href="/student/add/">Enroll a Dog</a>
+{% else %}
+<a class="btn btn-warning active" href='/studentNonStaff/add/'>Enroll Your Dog</a>
 {% endif %}
 
 </div>
