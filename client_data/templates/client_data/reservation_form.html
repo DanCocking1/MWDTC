@@ -1,11 +1,13 @@
 {% extends "base.html" %}
+{% block body_block %}
 <div class="jumbotron">
-    <form class="" action="index.html" method="post">
+    <form class="" method="post">
       {% csrf_token %}
       <table>
-          {{form.as_table}}
+          {{ form.as_table }}
       </table>
 
     <input class = 'btn btn-info' type="submit" name="" value="Make A Reservation">
     </form>
 </div>
+{% endblock %}

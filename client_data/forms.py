@@ -100,7 +100,7 @@ class ReservationUpdateForm(ModelForm):
     class Meta:
         model = Reservation
         fields = [
-            'owner', 'bath', 'bathDate', 'dog', 'dog2',
+            'bath', 'bathDate', 'dog', 'dog2',
             'dog3', 'PickUpTime', 'kennel_num', 'nails', 'medicationInstructions',
             'feedingInstructions'
         ]

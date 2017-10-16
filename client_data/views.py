@@ -29,6 +29,10 @@ class ClientListView(UserPassesTestMixin, LoginRequiredMixin, ListView):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
     # res = send_mail('Test Send', 'Testing Sending to my email address', 'testMWDTC@yahoo.com', ['Dan.Cocking@gmail.com'])
+class NoRoomView(LoginRequiredMixin, TemplateView):
+    template_name = 'client_data/no_room.html'
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
 
 class HomeView(LoginRequiredMixin, FormView):
     template_name = 'index.html'
@@ -113,6 +117,7 @@ class ReservationUpdate(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
         return self.request.user.is_staff
     model = Reservation
     form_class = ReservationUpdateForm
+    # template_name = "client_data/reservation_form.html"
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
     def get_success_url(self):
@@ -393,6 +398,7 @@ class MakeAReservationView(UserPassesTestMixin, LoginRequiredMixin, CreateView):
                     x.save()
 
                 else:
+                    success_url = '/noroom/'
                     if days == dateRes.check_in:
                         raise Http404 #x would not have been created
                     else:
