@@ -28,14 +28,14 @@ class DateInput(forms.DateInput):
 class DogForm(ModelForm):
     class Meta:
         model = Dog
-        fields = ['name', 'owner', 'breed', 'size', 'date_of_birth', 'gender', 'weight',
-         'notes', 'rabies_date', 'distemper_date', 'parvo_date', 'bordetello']
+        fields = ['name', 'owner', 'breed', 'size', 'date_of_birth', 'gender',
+         'notes', 'rabies_date',  'parvo_distemper_date', 'bordetella', 'fecal_date']
         widgets = {
             'date_of_birth': DateInput(),
             'rabies_date': DateInput(),
-            'distemper_date': DateInput(),
-            'parvo_date': DateInput(),
-            'bordetello': DateInput(),
+            'parvo_distemper_date': DateInput(),
+            'bordetella': DateInput(),
+            'fecal_date':DateInput()
          }
 
 class DogClassForm(ModelForm):
@@ -53,7 +53,7 @@ class DogClassForm(ModelForm):
 class DogNonStaffForm(ModelForm):
     class Meta:
         model = Dog
-        fields = ['name', 'breed', 'size', 'date_of_birth', 'gender', 'weight', 'notes']
+        fields = ['name', 'breed', 'size', 'date_of_birth', 'gender', 'notes']
         widgets = {
         'date_of_birth': DateInput(),
         }
@@ -74,20 +74,21 @@ class DogStudentNonStaffForm(forms.ModelForm):
 class DogFormUpdate(ModelForm):
     class Meta:
         model = Dog
-        fields = ['weight', 'rabies_date', 'parvo_date', 'distemper_date',
-            'bordetello', 'notes']
+        fields = ['rabies_date', 'parvo_distemper_date',
+            'bordetella', 'notes']
         widgets = {
             'rabies_date': DateInput(),
-            'distemper_date': DateInput(),
-            'parvo_date': DateInput(),
-            'bordetello': DateInput(),
+            'parvo_distemper_date': DateInput(),
+            'bordetella': DateInput(),
         }
 class MakeAReservationForm(ModelForm):
     class Meta:
         model = Reservation
         fields = [
             'owner', 'check_in', 'check_out', 'bath', 'bathDate', 'dog', 'dog2',
-            'dog3'
+            'dog3', 'PickUpTime', 'kennel_num', 'nails', 'medicationInstructions',
+            'feedingInstructions'
+
         ]
         widgets = {
             'check_in':DateInput(),
@@ -98,7 +99,8 @@ class MakeAReservationNonStaffForm(ModelForm):
     class Meta:
         model = Reservation
         fields = [
-            'owner', 'check_in', 'check_out', 'bath', 'bathDate', 'dog', 'dog2', 'dog3'
+            'owner', 'check_in', 'check_out', 'bath', 'bathDate', 'dog', 'dog2', 'dog3',
+            'PickUpTime'
         ]
         widgets = {
             'check_in':DateInput(),

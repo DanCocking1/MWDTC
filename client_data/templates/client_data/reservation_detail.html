@@ -3,14 +3,182 @@
 <div class="jumbotron">
   <p>Today's Date: {{reservation.todaysDate}}</p>
   <h3>Reservation Details: </h3>
-  <p>Dog(s): {{reservation.dog}}  {% if dog2 != null  %}{{reservation.dog2}}
-    {% endif %} {% if dog3 != null %} {{reservation.dog3}}{% endif %}</p>
+  <p>Dog(s): {{reservation.dog}}  {% if reservation.dog2 != null  %}{{reservation.dog2}}
+    {% endif %} {% if reservation.dog3 != null %} {{reservation.dog3}}{% endif %}</p>
   <p>Owner: {{reservation.owner}}</p>
   <p>Check in Date: {{reservation.check_in}}</p>
-  <p>Checkout Date: {{reservation.check_out}}</p>
+  <p>Check out Date: {{reservation.check_out}}</p>
   {% if reservation.bathDate != null %} <p>Bath on: {{reservation.bathDate}}</p>
   {% else %} <p>No Bath on this Reservation</p>
    {% endif %}
+   <p style="page-break-after: always;">&nbsp;</p>
+   <p style="page-break-before: always;">&nbsp;</p>
+
+<table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100%>
+  <thead>
+    <th>Dog Name: </th><th>Kennel #</th>
+  </thead>
+  <tr>
+    <td>{{reservation.dog}}</td><td>{{reservation.kennel_num}}</td>
+  </tr>
+</table>
+<table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100>
+  <thead>
+    <th>Check in Date:</th><th>Bath: </th><th>Nails: </th>
+  </thead>
+  <tr>
+    <td>{{reservation.check_in}}</td><td>{% if reservation.bath  %}{{reservation.bathDate}}{% else %}{{reservation.bath}}{% endif %}</td><td>{{reservation.nails}}</td>
+  </tr>
+</table>
+<table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100%>
+<thead>
+  <th>Check Out Date:</th><th>Pick Up Time: </th>
+</thead>
+<tr>
+  <td>{{reservation.check_out}}</td><td>{{reservation.PickUpTime}}</td>
+</tr>
+
+</table>
+<table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100% >
+  <thead>
+    <th>Feeding:</th>
+  </thead>
+  <tr>
+    <td>{{reservation.feedingInstructions}}</td>
+  </tr>
+  <thead>
+  <th>Medication: </th>
+  </thead>
+  <tr>
+    <td>{{reservation.medicationInstructions}}</td>
+  </tr>
+  <thead>
+    <th>Owner Name: </th>
+  </thead>
+  <tr>
+    <td>{{reservation.owner}}</td>
+  </tr>
+  <thead>
+    <th>Notes/Personal Items</th>
+  </thead>
+  <tr>
+    <td>{{reservation.notes}}</td>
+  </tr>
+</table>
+
+{% if reservation.dog2 != null%}
+<p style="page-break-after: always;">&nbsp;</p>
+<p style="page-break-before: always;">&nbsp;</p>
+
+<table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100%>
+<thead>
+ <th>Dog Name: </th><th>Kennel #</th>
+</thead>
+<tr>
+ <td>{{reservation.dog2}}</td><td>{{reservation.kennel_num}}</td>
+</tr>
+</table>
+<table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100>
+<thead>
+ <th>Check in Date:</th><th>Bath: </th><th>Nails: </th>
+</thead>
+<tr>
+ <td>{{reservation.check_in}}</td><td>{% if reservation.bath  %}{{reservation.bathDate}}{% else %}{{reservation.bath}}{% endif %}</td><td>{{reservation.nails}}</td>
+</tr>
+</table>
+<table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100%>
+<thead>
+<th>Check Out Date:</th><th>Pick Up Time: </th>
+</thead>
+<tr>
+<td>{{reservation.check_out}}</td><td>{{reservation.PickUpTime}}</td>
+</tr>
+
+</table>
+<table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100% >
+<thead>
+ <th>Feeding:</th>
+</thead>
+<tr>
+ <td>{{reservation.feedingInstructions}}</td>
+</tr>
+<thead>
+<th>Medication: </th>
+</thead>
+<tr>
+ <td>{{reservation.medicationInstructions}}</td>
+</tr>
+<thead>
+ <th>Owner Name: </th>
+</thead>
+<tr>
+ <td>{{reservation.owner}}</td>
+</tr>
+<thead>
+ <th>Notes/Personal Items</th>
+</thead>
+<tr>
+ <td>{{reservation.notes}}</td>
+</tr>
+</table>
+{% endif %}
+{% if reservation.dog3 != null %}
+<p style="page-break-after: always;">&nbsp;</p>
+<p style="page-break-before: always;">&nbsp;</p>
+
+<table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100%>
+<thead>
+ <th>Dog Name: </th><th>Kennel #</th>
+</thead>
+<tr>
+ <td>{{reservation.dog3}}</td><td>{{reservation.kennel_num}}</td>
+</tr>
+</table>
+<table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100>
+<thead>
+ <th>Check in Date:</th><th>Bath: </th><th>Nails: </th>
+</thead>
+<tr>
+ <td>{{reservation.check_in}}</td><td>{% if reservation.bath  %}{{reservation.bathDate}}{% else %}{{reservation.bath}}{% endif %}</td><td>{{reservation.nails}}</td>
+</tr>
+</table>
+<table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100%>
+<thead>
+<th>Check Out Date:</th><th>Pick Up Time: </th>
+</thead>
+<tr>
+<td>{{reservation.check_out}}</td><td>{{reservation.PickUpTime}}</td>
+</tr>
+
+</table>
+<table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100% >
+<thead>
+ <th>Feeding:</th>
+</thead>
+<tr>
+ <td>{{reservation.feedingInstructions}}</td>
+</tr>
+<thead>
+<th>Medication: </th>
+</thead>
+<tr>
+ <td>{{reservation.medicationInstructions}}</td>
+</tr>
+<thead>
+ <th>Owner Name: </th>
+</thead>
+<tr>
+ <td>{{reservation.owner}}</td>
+</tr>
+<thead>
+ <th>Notes/Personal Items</th>
+</thead>
+<tr>
+ <td>{{reservation.notes}}</td>
+</tr>
+</table>
+{% endif %}
+
 
 </div>
 

@@ -174,8 +174,7 @@ class DogNonStaffCreateView(LoginRequiredMixin, CreateView):
         form.instance.notes = form.cleaned_data['notes']
         now = datetime.date.today()
         form.instance.rabies_date = now
-        form.instance.distemper_date = now
-        form.instance.parvo_date = now
+        form.instance.parvo_distemper_date = now
         form.instance.bordetello = now
         return super(DogNonStaffCreateView, self).form_valid(form)
 

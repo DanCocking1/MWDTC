@@ -9,12 +9,31 @@
     <p>Phone: Home: {{client.home_phone}} Cell: {{client.cell_phone}}</p>
     <p>Notes: {{client.notes}}</p>
     <p>Dogs: </p>
+      <table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100%>
+        <thead class="thead-inverse">
+          <th>  Name  </th><th>  Rabies Date  </th><th>  Parvo/Distemper Date  </th>
+          <th>  Bordetella Date  </th><th>  Fecal Test Date  </th>
+        </thead>
     {% for dog in client.dog.all %}
-    <p><a href= '{% url 'dog-detail' pk=dog.id %}'>{{dog.name}}  {{dog.check_date}}</a></p>
 
+      <tr>
+        <td><a href= '{% url 'dog-detail' pk=dog.id %}'><h4>{{dog.name}}  </h4></td>
+          <td> {% if dog.getOneYear > dog.rabies_date %} <h4 class='text-success'>
+            {% elif dog.getElevenMonths > dog.rabies_date %} <h4 class='text-warning'>
+            {% else %}<h4 class ='text-danger'>{% endif %}  {{dog.rabies_date}}</h4></td><td>
+            {% if dog.getOneYear > dog.parvo_distemper_date %}<h4 class='text-success'>
+            {% elif dog.getElevenMonths > dog.parvo_distemper_date%}<h4 class='text-warning'>
+              {% else %} <h4 class='text-danger'>{% endif %}  {{dog.parvo_distemper_date}}  </h4></td>
+          <td>{% if dog.getSixMonths > dog.bordetella %}<h4 class='text-success'>
+            {% elif dog.getFiveMonths > dog.bordetella %}<h4 class='text-warning'>
+            {% else %}<h4 class='text-danger'>{% endif %}  {{dog.bordetella}}  </h4></td>
+          <td>{% if dog.getOneYear > dog.fecal_date %}<h4 class='text-success'>
+            {% elif dog.getElevenMonths > dog.fecal_date %}<h4 class = 'text-warning'>
+            {% else %}<h4 class='text-danger'>{% endif %}  {{dog.fecal_date}}  </h4></td></a>
+      </tr>
     {% endfor %}
-
-    <p><a class = 'btn btn-warning' href='{% url 'client-update' pk=client.id %}'>Update</a>
+      </table>
+    <p><a class = 'btn btn-info' href='{% url 'client-update' pk=client.id %}'>Update</a>
     {% if user.is_staff %}
     <a class = 'btn btn-danger' href="{% url 'dog-add' %}">Add Dog</a></p>
     {% else %}

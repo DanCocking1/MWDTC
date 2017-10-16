@@ -39,11 +39,10 @@ class Dog (models.Model):
     size = models.CharField(max_length=64)
     date_of_birth = models.DateField()
     gender = models.CharField(max_length=64)
-    weight = models.PositiveIntegerField()
     rabies_date = models.DateField()
-    distemper_date = models.DateField()
-    parvo_date = models.DateField()
-    bordetello = models.DateField()
+    parvo_distemper_date = models.DateField()
+    fecal_date = models.DateField()
+    bordetella = models.DateField()
     notes = models.TextField(max_length=512, blank=True, null=True)
     check_date_report = models.PositiveSmallIntegerField(default = 1)
     def __str__(self):
@@ -52,25 +51,23 @@ class Dog (models.Model):
     def check_date(self):
         today = datetime.date.today()
         todayPlus30 = today + datetime.timedelta(30)
+        todayPlusOneYear = today + datetime.timedelta(365)
+        todayPlusSixMonths = today + datetime.timedelta(180)
         overdue = []
         CloseToDue = []
-        if today > self.rabies_date:
+        if today > (self.rabies_date + datetime.timedelta(365)):
             overdue.append("Rabies overdue:  " + str(self.rabies_date))
-        if today > self.distemper_date:
-            overdue.append("Distemper overdue: " + str(self.distemper_date))
-        if today > self.parvo_date:
-            overdue.append("Parvo overdue: " + str(self.parvo_date))
-        if today > self.bordetello:
-            overdue.append("bordetello overdue: " + str(self.bordetello))
+        if today > (self.parvo_distemper_date + datetime.timedelta(365)):
+            overdue.append("Parvo/Distemper overdue: " + str(self.parvo_distemper_date))
+        if today > (self.bordetella + datetime.timedelta(180)):
+            overdue.append("bordetella overdue: " + str(self.bordetella))
         if len(overdue) == 0:
-            if todayPlus30 > self.rabies_date:
+            if todayPlus30 > (self.rabies_date + datetime.timedelta(365)):
                 CloseToDue.append("Rabies close to due:  " + str(self.rabies_date))
-            if todayPlus30 > self.distemper_date:
-                CloseToDue.append("Distemper close to due: " + str(self.distemper_date))
-            if todayPlus30 > self.parvo_date:
-                CloseToDue.append("Parvo overdue close to due: " + str(self.parvo_date))
-            if todayPlus30 > self.bordetello:
-                CloseToDue.append("bordetello overdue close to due: " + str(self.bordetello))
+            if todayPlus30 > (self.parvo_distemper_date + datetime.timedelta(365)):
+                CloseToDue.append("Parvo overdue close to due: " + str(self.parvo_distemper_date))
+            if todayPlus30 > (self.bordetella + datetime.timedelta(180)):
+                CloseToDue.append("bordetella overdue close to due: " + str(self.bordetella))
             if len(CloseToDue) == 0:
                 self.check_date_report = 1
                 return "No overdue or Close to due Vaccinations"
@@ -84,7 +81,14 @@ class Dog (models.Model):
                 + " are overdue!"  + str(overdue))
     def getToday(self):
         return datetime.date.today()
-
+    def getOneYear(self):
+        return (datetime.date.today() + datetime.timedelta(365))
+    def getSixMonths(self):
+        return (datetime.date.today()+ datetime.timedelta(180))
+    def getFiveMonths(self):
+        return (datetime.date.today()+ datetime.timedelta(150))
+    def getElevenMonths(self):
+        return (datetime.date.today()+ datetime.timedelta(335))
 
 
     def get_absolute_url(self):
@@ -92,17 +96,28 @@ class Dog (models.Model):
             'pk':self.pk
         })
 
+timeChoice = (
+    ('before noon', 'BEFORE NOON'),
+    ('after noon', 'AFTER NOON')
+)
+
 class Reservation(models.Model):
     created = models.ForeignKey(User, blank=True, null=True)
     owner = models.ForeignKey(Client)
     today = datetime.date.today()
+    kennel_num = models.PositiveSmallIntegerField(blank=True, null=True)
     timePlus30 = today + datetime.timedelta(30)
+    PickUpTime = models.CharField(max_length=12, choices=timeChoice, default='before noon')
     check_in = models.DateField()
     check_out = models.DateField()
+    feedingInstructions = models.TextField(max_length=512, blank=True, null=True)
+    medicationInstructions = models.TextField(max_length=512, blank=True, null=True)
+    notes = models.TextField(max_length=512, blank=True, null = True)
     dog = models.ForeignKey(Dog, null = True, blank =True, related_name='first') #According to website runs can contain up to 3 dogs
     dog2 = models.ForeignKey(Dog, null = True, blank = True, related_name='second')
     dog3 = models.ForeignKey(Dog, null = True, blank = True, related_name='third')
-    bath = models.BooleanField()
+    bath = models.BooleanField(default=False)
+    nails = models.BooleanField(default=False)
     bathDate = models.DateField(null = True, blank = True)
     def __str__(self):
         return (str(self.owner) + " " + str(self.dog) + " " + str(self.check_in) + " " + str(self.check_out))
@@ -132,7 +147,7 @@ class DayRunReservation (models.Model):
             self.available_runs -= 1
             return "Run can be reserved"
         else:
-            return "No Runs Available"
+            return "No Runs Available on "+ str(date) + ", Please Call (316) 300-6893"
     def CancelRes(self):
         if self.available_runs < 30:
             self.available_runs = self.available_runs + 1
