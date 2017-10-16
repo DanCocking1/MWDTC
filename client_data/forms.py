@@ -95,12 +95,25 @@ class MakeAReservationForm(ModelForm):
             'check_out':DateInput(),
             'bathDate':DateInput(),
         }
+
+class ReservationUpdateForm(ModelForm):
+    class Meta:
+        model = Reservation
+        fields = [
+            'owner', 'bath', 'bathDate', 'dog', 'dog2',
+            'dog3', 'PickUpTime', 'kennel_num', 'nails', 'medicationInstructions',
+            'feedingInstructions'
+        ]
+        widgets = {
+            'bathDate':DateInput(),
+        }
+
 class MakeAReservationNonStaffForm(ModelForm):
     class Meta:
         model = Reservation
         fields = [
             'owner', 'check_in', 'check_out', 'bath', 'bathDate', 'dog', 'dog2', 'dog3',
-            'PickUpTime'
+            'PickUpTime', 'medicationInstructions', 'feedingInstructions'
         ]
         widgets = {
             'check_in':DateInput(),

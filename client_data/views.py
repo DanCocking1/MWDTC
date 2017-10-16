@@ -11,7 +11,8 @@ from .models import (Dog, Client, DogClass, DogStudent, DayRunReservation,
                         Reservation, DogDayRes)
 from .forms import (DogForm, DogFormUpdate, MakeAReservationForm, PickADate,
                         DogClassForm, SignUpForm, DogNonStaffForm,
-                        DogStudentNonStaffForm, MakeAReservationNonStaffForm)
+                        DogStudentNonStaffForm, MakeAReservationNonStaffForm,
+                        ReservationUpdateForm)
 from django.http import Http404
 
 
@@ -107,6 +108,15 @@ class ClientUpdate(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse('client-list')
 
+class ReservationUpdate(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
+    def test_func(self):
+        return self.request.user.is_staff
+    model = Reservation
+    form_class = ReservationUpdateForm
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+    def get_success_url(self):
+        return reverse('reservation-list')
 
 class ClientCreate(UserPassesTestMixin, LoginRequiredMixin, CreateView):
     def test_func(self):

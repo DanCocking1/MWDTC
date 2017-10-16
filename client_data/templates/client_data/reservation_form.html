@@ -2,7 +2,10 @@
 <div class="jumbotron">
     <form class="" action="index.html" method="post">
       {% csrf_token %}
-      {{form.as_p}}
-    <input type="submit" name="" value="Make Reservation">
+      <table>
+          {{form.as_table}}
+      </table>
+
+    <input class = 'btn btn-info' type="submit" name="" value="Make A Reservation">
     </form>
 </div>

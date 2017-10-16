@@ -25,7 +25,7 @@ from client_data.views import (HomeView, ClientListView, ClientUpdate, ClientCre
                 ReservationList, ReservationDetailView, DayRunReservationDetailView,
                 DogStudentDeleteView, UserCreationView, ClientNonStaffCreate,
                 DogNonStaffCreateView, DogUpdateNonStaff, DogStudentNonStaffCreateView,
-                MakeAReservationNonStaffView)
+                MakeAReservationNonStaffView, ReservationUpdate)
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^signup/$', UserCreationView.as_view(), name = 'user-add'),
@@ -50,7 +50,8 @@ urlpatterns = [
      url(r'^reservation/add/$', MakeAReservationView.as_view(), name='reservation-add'),
      url(r'^reservationnonstaff/add/$', MakeAReservationNonStaffView.as_view(), name = 'reservation-add-non-staff'),
      url(r'^reservation/$', ReservationList.as_view(), name='reservation-list'),
+     url(r'^reservation/update/(?P<pk>[0-9]+)/$', ReservationUpdate.as_view(), name='reservation-update'),
      url(r'^reservation/(?P<pk>[0-9]+)/$', ReservationDetailView.as_view(), name='reservation-detail'),
      url(r'^dayrun/(?P<pk>[0-9]+)/$', DayRunReservationDetailView.as_view(), name='dayrun-detail'),
-     url(r'^student/delete/(?P<pk>[0-9]+)/$', DogStudentDeleteView.as_view(), name='dogstudent-delete')
+     url(r'^student/delete/(?P<pk>[0-9]+)/$', DogStudentDeleteView.as_view(), name='dogstudent-delete'),
 ]

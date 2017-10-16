@@ -11,6 +11,11 @@
   {% if reservation.bathDate != null %} <p>Bath on: {{reservation.bathDate}}</p>
   {% else %} <p>No Bath on this Reservation</p>
    {% endif %}
+
+   {% if user.is_staff %}
+<a class = 'btn btn-info' href="{% url 'reservation-update' pk=reservation.id %}">Change a Reservation</a>
+   {% endif %}
+
    <p style="page-break-after: always;">&nbsp;</p>
    <p style="page-break-before: always;">&nbsp;</p>
 
