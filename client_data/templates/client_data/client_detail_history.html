@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block body_block %}
+<div class="jumbotron">
+  <h2>Client Details:</h2>
+  {# <p>Id: {{client.id}}</p>#}
+  <p>Name: {{client.first_name}} {{client.last_name}}</p>
+  <p>Email: {{client.email_address}}</p>
+
+
+  <p>Reservation History:</p>
+  <table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100%>
+    <thead>
+      <th>Check in Date</th><th>Check out Date</th><th>Dog(s) </th>
+    </thead>
+  {% for reservation in client.reservation.all %}
+  {%if reservation.cancelled == False%}
+    <tr>
+      <td>{{reservation.check_in}}</td><td>{{reservation.check_out}}</td><td>{{reservation.dog}}
+        {% if reservation.dog2 != null %} {{reservation.dog2}} {%endif%} {% if reservation.dog3 != null %}{{reservation.dog3}}{% endif %}</td>{% endif %}
+    </tr>
+    {% endfor %}
+  </table>
+<p>Bath History: </p>
+<table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100%>
+  <thead>
+    <th>Dog</th><th>Bath Date: </th><th> Nails? </th>
+  </thead>
+  {% for reservation in client.reservation.all %}{%if reservation.bath%}
+  <tr>
+    <td>{{reservation.dog}}</td><td>{{reservation.bathDate}}</td><td>{{reservation.nails}}</td>
+  </tr>
+  {% endif %}{% endfor %}
+</table>
+<p>Class History: </p>
+
+<table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100%>
+  <thead>
+    <th>Dog</th><th>Class Name </th>
+  </thead>
+  {% for student in client.student.all %}{% if student.cancelled == False %}
+  <tr>
+    <td>{{student.dogId}}</td><td>{{student.classId}}</td>
+  </tr>
+  {% endif %}{% endfor %}
+</table>
+
+</div>
+
+
+{% endblock %}

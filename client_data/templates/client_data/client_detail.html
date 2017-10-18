@@ -34,6 +34,7 @@
     {% endfor %}
       </table>
     <p><a class = 'btn btn-info' href='{% url 'client-update' pk=client.id %}'>Update</a>
+      <a class = 'btn btn-info' href='{% url 'client-history' pk=client.id %}'>History</a>
     {% if user.is_staff %}
     <a class = 'btn btn-danger' href="{% url 'dog-add' %}">Add Dog</a></p>
     {% else %}

@@ -8,11 +8,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (TemplateView,ListView, UpdateView, CreateView,
                         DetailView, FormView, DeleteView)
 from .models import (Dog, Client, DogClass, DogStudent, DayRunReservation,
-                        Reservation, DogDayRes)
+                        Reservation, DogDayRes, PrivateDogClass)
 from .forms import (DogForm, DogFormUpdate, MakeAReservationForm, PickADate,
                         DogClassForm, SignUpForm, DogNonStaffForm,
                         DogStudentNonStaffForm, MakeAReservationNonStaffForm,
-                        ReservationUpdateForm)
+                        ReservationUpdateForm, NonStaffReservationUpdateForm,
+                        PrivateClassForm, PrivateClassUpdateForm)
 from django.http import Http404
 
 
@@ -105,7 +106,7 @@ class UserCreationView(FormView):
 class ClientUpdate(LoginRequiredMixin, UpdateView):
     model = Client
     fields = ['street_address', 'city',
-        'zipcode', 'email_address', 'home_phone', 'cell_phone']
+        'zipcode', 'home_phone', 'cell_phone']
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
 
@@ -122,6 +123,12 @@ class ReservationUpdate(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     redirect_field_name = 'redirect_to'
     def get_success_url(self):
         return reverse('reservation-list')
+
+class ReservationUpdateNonStaff(LoginRequiredMixin, UpdateView):
+    model = Reservation
+    form_class = NonStaffReservationUpdateForm
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
 
 class ClientCreate(UserPassesTestMixin, LoginRequiredMixin, CreateView):
     def test_func(self):
@@ -163,6 +170,40 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
     model = Client
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
+
+class PrivateDogClassCreate(UserPassesTestMixin, LoginRequiredMixin, CreateView):
+    def test_func(self):
+        return self.request.user.is_staff
+    model = PrivateDogClass
+    form_class = PrivateClassUpdateForm
+    template_name = 'client_data/private_dog_class_form.html'
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+
+class PrivateDogClassUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
+    def test_func(self):
+        return self.request.user.is_staff
+    model = PrivateDogClass
+    form_class = PrivateClassUpdateForm
+    template_name = 'client_data/private_dog_class_form.html'
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+
+class PrivateDogDetailView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
+    def test_func(self):
+        return self.request.user.is_staff
+    model = PrivateDogClass
+    template_name = 'client_data/private_dog_class_detail.html'
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+
+
+
+class ClientHistoryDetailView(LoginRequiredMixin, DetailView):
+    model = Client
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+    template_name = 'client_data/client_detail_history.html'
 
 class DogCreateView(UserPassesTestMixin, LoginRequiredMixin, CreateView):
     def test_func(self):
@@ -430,8 +471,7 @@ class MakeAReservationView(UserPassesTestMixin, LoginRequiredMixin, CreateView):
 class ReservationList(LoginRequiredMixin, ListView):
     model = Reservation
 
-class ReservationDetailView(LoginRequiredMixin, DetailView):
-    model = Reservation
+
 
 class DayRunReservationDetailView(LoginRequiredMixin, DetailView):
     model = DayRunReservation

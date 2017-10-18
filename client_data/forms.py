@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Dog, Reservation, DayRunReservation, DogClass, Client, DogStudent
+from .models import Dog, Reservation, DayRunReservation, DogClass, Client, DogStudent, PrivateDogClass
 from django.contrib.admin.widgets import AdminDateWidget
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -75,17 +75,18 @@ class DogFormUpdate(ModelForm):
     class Meta:
         model = Dog
         fields = ['rabies_date', 'parvo_distemper_date',
-            'bordetella', 'notes']
+            'bordetella', 'fecal_date', 'notes']
         widgets = {
             'rabies_date': DateInput(),
             'parvo_distemper_date': DateInput(),
             'bordetella': DateInput(),
+            'fecal_date':DateInput(),
         }
 class MakeAReservationForm(ModelForm):
     class Meta:
         model = Reservation
         fields = [
-            'owner', 'check_in', 'check_out', 'bath', 'bathDate', 'dog', 'dog2',
+            'owner', 'check_in', 'check_out', 'bath', 'bathDate', 'bath_dog_size', 'dog', 'dog2',
             'dog3', 'PickUpTime', 'kennel_num', 'nails', 'medicationInstructions',
             'feedingInstructions'
 
@@ -100,8 +101,19 @@ class ReservationUpdateForm(ModelForm):
     class Meta:
         model = Reservation
         fields = [
-            'bath', 'bathDate', 'dog', 'dog2',
+            'bath', 'bathDate', 'dog', 'dog2', 'bath_dog_size',
             'dog3', 'PickUpTime', 'kennel_num', 'nails', 'medicationInstructions',
+            'feedingInstructions', 'cancelled'
+        ]
+        widgets = {
+            'bathDate':DateInput(),
+        }
+
+class NonStaffReservationUpdateForm(ModelForm):
+    class Meta:
+        model = Reservation
+        fields = [
+            'bath', 'bathDate', 'nails','dog', 'dog2', 'dog3', 'PickUpTime', 'medicationInstructions',
             'feedingInstructions'
         ]
         widgets = {
@@ -112,7 +124,7 @@ class MakeAReservationNonStaffForm(ModelForm):
     class Meta:
         model = Reservation
         fields = [
-            'owner', 'check_in', 'check_out', 'bath', 'bathDate', 'dog', 'dog2', 'dog3',
+            'owner', 'check_in', 'check_out', 'bath', 'bathDate', 'nails', 'bath_dog_size', 'dog', 'dog2', 'dog3',
             'PickUpTime', 'medicationInstructions', 'feedingInstructions'
         ]
         widgets = {
@@ -128,6 +140,36 @@ class MakeAReservationNonStaffForm(ModelForm):
         self.fields['dog2'].queryset = Dog.objects.filter(created = user)
         self.fields['dog3'].queryset = Dog.objects.filter(created = user)
 
+class PrivateClassForm(ModelForm):
+    class Meta:
+        model = PrivateDogClass
+        fields = [
+        'classId', 'clientId', 'dogId', 'class_type', 'kennel_num', 'sessions',
+        'check_in', 'check_out', 'Bath', 'nails', 'bath_Date', 'follow_Up_Appointment',
+        'pick_up_time_and_date', 'feeding', 'feeding', 'Medication',
+        'Contanct_Phone', 'Prong_Collar', 'Treats', 'Ecollar', 'Extra_Boarding_days',
+        'Personal_Protection_Items', 'Notes'
+        ]
+        widgets = {
+            'check_in':DateInput(),
+            'check_out':DateInput(),
+            'bathDate':DateInput(),
+            }
+class PrivateClassUpdateForm(ModelForm):
+    class Meta:
+        model = PrivateDogClass
+        fields = [
+        'classId', 'clientId', 'dogId', 'class_type', 'kennel_num', 'sessions',
+        'check_in', 'check_out', 'Bath', 'nails', 'bath_Date', 'follow_Up_Appointment',
+        'pick_up_time_and_date', 'feeding', 'feeding', 'Medication',
+        'Contanct_Phone', 'Prong_Collar', 'Treats', 'Ecollar', 'Extra_Boarding_days',
+        'Personal_Protection_Items', 'Notes'
+        ]
+        widgets = {
+            'check_in':DateInput(),
+            'check_out':DateInput(),
+            'bathDate':DateInput(),
+            }
 
 class PickADate(forms.Form):
     date = forms.DateField(widget = DateInput)

@@ -25,7 +25,9 @@ from client_data.views import (HomeView, ClientListView, ClientUpdate, ClientCre
                 ReservationList, ReservationDetailView, DayRunReservationDetailView,
                 DogStudentDeleteView, UserCreationView, ClientNonStaffCreate,
                 DogNonStaffCreateView, DogUpdateNonStaff, DogStudentNonStaffCreateView,
-                MakeAReservationNonStaffView, ReservationUpdate, NoRoomView)
+                MakeAReservationNonStaffView, ReservationUpdate, NoRoomView, ClientHistoryDetailView,
+                ReservationUpdateNonStaff, PrivateDogClassCreate, PrivateDogClassUpdateView,
+                PrivateDogDetailView)
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^signup/$', UserCreationView.as_view(), name = 'user-add'),
@@ -44,6 +46,9 @@ urlpatterns = [
      url(r'^classes/$', DogClassListView.as_view(), name='dog-class-list'),
      url(r'^classes/add/$', DogClassCreateView.as_view(), name='dog-class-add'),
      url(r'^classes/(?P<pk>[0-9]+)/$', DogClassDetailView.as_view(), name = 'dogclass-detail'),
+     url(r'^privateclass/add/$', PrivateDogClassCreate.as_view(), name = 'private-create'),
+     url(r'^privateclass/update/(?P<pk>[0-9]+)/$', PrivateDogClassUpdateView.as_view(), name='private-update'),
+     url(r'^privateclass/(?P<pk>[0-9]+/$)', PrivateDogDetailView.as_view(), name = 'private-detail'),
      url(r'^student/(?P<pk>[0-9]+)/$', DogStudentDetailView.as_view(), name ='dogstudent-detail'),
      url(r'^student/add/$', DogStudentCreateView.as_view(), name = 'dogstudent-add'),
      url(r'^studentNonStaff/add/$', DogStudentNonStaffCreateView.as_view(), name='dogStudentNonStaff'),
@@ -51,8 +56,10 @@ urlpatterns = [
      url(r'^reservationnonstaff/add/$', MakeAReservationNonStaffView.as_view(), name = 'reservation-add-non-staff'),
      url(r'^reservation/$', ReservationList.as_view(), name='reservation-list'),
      url(r'^reservation/update/(?P<pk>[0-9]+)/$', ReservationUpdate.as_view(), name='reservation-update'),
+     url(r'^reservationnonstaff/update(?P<pk>[0-9]+)/$', ReservationUpdateNonStaff.as_view(), name='nonstaff-reservation-update'),
      url(r'^reservation/(?P<pk>[0-9]+)/$', ReservationDetailView.as_view(), name='reservation-detail'),
      url(r'^dayrun/(?P<pk>[0-9]+)/$', DayRunReservationDetailView.as_view(), name='dayrun-detail'),
      url(r'^student/delete/(?P<pk>[0-9]+)/$', DogStudentDeleteView.as_view(), name='dogstudent-delete'),
+     url(r'^clients/history/(?P<pk>[0-9]+)/$', ClientHistoryDetailView.as_view(), name='client-history'),
      url(r'^noroom/$', NoRoomView.as_view(), name='no-room'),
 ]

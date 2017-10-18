@@ -20,11 +20,12 @@
       <tr>
         <td>{% if dogClass.privateClass and user.is_staff %}
           <a href="{{dogClass.id}}">{{dogClass.name}} </td>
-          <td> {{dogClass.startDate}}</td> <td>{{dogClass.endDate}}</td> <td></td>Private Class  </a>
+          <td> {{dogClass.startDate}}</td> <td>{{dogClass.endDate}}</td> <td>Yes</td>   </a>
           {% elif  not dogClass.privateClass %}
       <a href="{{dogClass.id}}">{{dogClass.name}} </td>
         <td> {{dogClass.startDate}}</a></td>
         <td>{{dogClass.endDate}}</td>
+        <td>No</td>
       {% endif %}{% endif %}
 
   </tr>

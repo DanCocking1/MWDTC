@@ -15,7 +15,12 @@
       <td>  <a href= '{% url 'dogstudent-detail' pk=dogstudent.id %}'><h3>{{dogstudent.dogId}}  Owner: {{dogstudent.clientId}}</h3></a></td>
 
     </tr>
-
+    {% if dogclass.privateClass %}
+    {% for classtaken in dogclass.class.all %}
+    <a class = 'btn btn-info' href= "{% url 'private-detail' pk=classtaken.pk%}">View Class</a>
+    {% endfor %}
+    <a class = 'btn btn-info' href="{% url 'private-create' %}">Private Class Details</a>
+    {% endif %}
 
     {% endfor %}
     {% endif %}
@@ -23,6 +28,7 @@
 
 {% if dogclass.enrolled >= dogclass.classSize %}
     <a class= 'btn btn-danger disabled' href="/student/add/">Class Full</a>
+    <p>Give us a call at (316) 300-6893 to see if any class slots have opened up.</p>
 {% elif user.is_staff %}
 <a class= 'btn btn-success active' href="/student/add/">Enroll a Dog</a>
 {% else %}

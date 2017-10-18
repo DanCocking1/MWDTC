@@ -8,6 +8,12 @@ import datetime
 dayToCheck = datetime.date.today()
 numRuns = 15
 # Create your models here.
+dogSize = (
+    ('toy', 'TOY'),
+    ('medium', 'MEDIUM'),
+    ('large', 'LARGE'),
+    ('extra large', 'EXTRA LARGE')
+)
 class Client (models.Model):
     created = models.ForeignKey(User, null=True, blank=True)
     last_name = models.CharField(max_length = 50)
@@ -101,9 +107,10 @@ timeChoice = (
     ('after noon', 'AFTER NOON')
 )
 
+
 class Reservation(models.Model):
     created = models.ForeignKey(User, blank=True, null=True)
-    owner = models.ForeignKey(Client)
+    owner = models.ForeignKey(Client, related_name='reservation')
     today = datetime.date.today()
     kennel_num = models.PositiveSmallIntegerField(blank=True, null=True)
     timePlus30 = today + datetime.timedelta(30)
@@ -117,8 +124,10 @@ class Reservation(models.Model):
     dog2 = models.ForeignKey(Dog, null = True, blank = True, related_name='second')
     dog3 = models.ForeignKey(Dog, null = True, blank = True, related_name='third')
     bath = models.BooleanField(default=False)
+    bath_dog_size = models.CharField(max_length = 12, choices=dogSize, default = 'medium')
     nails = models.BooleanField(default=False)
     bathDate = models.DateField(null = True, blank = True)
+    cancelled = models.BooleanField(default=False)
     def __str__(self):
         return (str(self.owner) + " " + str(self.dog) + " " + str(self.check_in) + " " + str(self.check_out))
     def get_success_url(self):
@@ -135,6 +144,36 @@ class Reservation(models.Model):
             return False
     def todaysDate(self):
         return datetime.date.today()
+    def get_estimated_price(self):
+        dates = self.check_in
+        i = 0
+        estimation = 0
+        price = 0
+        while dates < self.check_out:
+            i += 1
+            dates = dates + datetime.timedelta(1)
+        if self.PickUpTime == 'after noon':
+            i += 1
+        if self.bath:
+            if self.bath_dog_size == 'toy':
+                estimation = estimation + 18
+            elif self.bath_dog_size == 'medium':
+                estimation = estimation + 25
+            elif self.bath_dog_size == 'large':
+                estimation = estimation + 30
+            else:
+                estimation = estimation + 35
+        if self.dog3:
+            price = (57 * i) + estimation
+        elif self.dog2:
+            price = (43 * i) + estimation
+        else:
+            price = (24 * i) + estimation
+        return price
+
+
+
+
 
 
 
@@ -210,7 +249,7 @@ class DogClass(models.Model):
 class DogStudent(models.Model):
     created = models.ForeignKey(User, null=True, blank=True)
     dogId = models.ForeignKey(Dog)
-    clientId = models.ForeignKey(Client)
+    clientId = models.ForeignKey(Client, related_name='student')
     classId = models.ForeignKey(DogClass, related_name='dogstudent')
     cancelledEnrollment = models.BooleanField(default=False)
     def __str__(self):
@@ -223,3 +262,33 @@ class DogStudent(models.Model):
         return reverse('dogstudent-detail', kwargs={
             'pk':self.pk
             })
+private_selection = (
+    ('Boarding/Train', 'BOARDING/TRAIN'),
+    ('Private', 'PRIVATE'),
+    ('Protection', 'Protection')
+)
+
+
+class PrivateDogClass(models.Model):
+    classId = models.ForeignKey(DogClass, related_name='classtaken')
+    clientId = models.ForeignKey(Client)
+    dogId = models.ForeignKey(Dog)
+    class_type = models.CharField(max_length = 16, choices = private_selection, default='Boarding/Train')
+    kennel_num = models.PositiveSmallIntegerField(blank=True, null=True)
+    sessions = models.PositiveSmallIntegerField(default = 0)
+    check_in = models.DateField()
+    check_out = models.DateField()
+    Bath = models.BooleanField(default=False)
+    nails = models.BooleanField(default=False)
+    bath_Date = models.DateField(null=True, blank=True)
+    follow_Up_Appointment = models.CharField(max_length= 32, blank=True, null=True)
+    pick_up_time_and_date = models.CharField(max_length=32, blank=True, null=True)
+    feeding = models.TextField(max_length=128, blank=True, null=True)
+    Medication = models.TextField(max_length=128, blank=True, null=True)
+    Contanct_Phone = models.CharField(max_length=16)
+    Prong_Collar = models.BooleanField(default=False)
+    Treats = models.BooleanField(default=False)
+    Ecollar = models.BooleanField(default=False)
+    Extra_Boarding_days = models.CharField(max_length = 32, null=True, blank= True)
+    Personal_Protection_Items = models.TextField(max_length=128, default = 'none')
+    Notes = models.TextField(max_length=128, default = 'none')

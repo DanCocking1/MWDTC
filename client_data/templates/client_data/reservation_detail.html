@@ -11,9 +11,28 @@
   {% if reservation.bathDate != null %} <p>Bath on: {{reservation.bathDate}}</p>
   {% else %} <p>No Bath on this Reservation</p>
    {% endif %}
+   <p class='text-success'>Estimated Price: ${{reservation.get_estimated_price}}</p>
+   <table class="table table-inverse table-striped table-bordered table-hover table-responsive" width=100%>
+     <thead>
+       <th>  Pick Up Times  </th><th>   Hours   </th><th class='text-warning'>   Extra Day Charge  </th>
+     </thead>
+     <tr>
+       <td>Monday - Friday</td><td>8am - 6pm</td><td class = 'text-warning'>Any time after 12:00pm</td>   </tr>
+<tr>
+  <td>Saturday</td><td>8am - 10am</td><td class ='text-warning'>No Pickups after 10 am</td>
+</tr>
+    <tr>
+       <td>Sunday</td><td>8am - 10am or 6pm to 7 pm</td><td class = 'text-warning'>Anytime after 10am</td>
+    </tr>
+
+
+   </table>
 
    {% if user.is_staff %}
 <a class = 'btn btn-info' href='{%  url "reservation-update" pk=reservation.id %}'>Change a Reservation</a>
+ {% else %}
+ <a class = 'btn btn-success' href='{%  url "nonstaff-reservation-update" pk=reservation.id %}'>Make Changes to your Reservation</a>
+ <p class = 'text-warning'>Please note, If you need to cancel your reservation please call us at (316) 300-6893</p>
    {% endif %}
 
    <p style="page-break-after: always;">&nbsp;</p>

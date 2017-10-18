@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block body_block %}
+<div class="jumbotron">
+  <table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100%>
+    <thead>
+      <th>              </th><th>  Sessions </th>
+    </thead>
+    <tr>
+      <td>{{PrivateDogClass.class_type}}</td><td>{{PrivateDogClass.sessions}}</td>
+    </tr>
+    <thead>
+      <th> Dog Name: </th><th> Kennel#  </th>
+    </thead>
+      <tr>
+        <td>{{PrivateDogClass.dogId}}</td><td>{{PrivateDogClass.kennel_num}}</td>
+      </tr>
+  </table>
+  <table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100%>
+    <thead>
+      <th>Check in:</th><th>Bath: </th><th>Nails</th>
+    </thead>
+    <td>{{PrivateDogClass.check_in}}</td><td>{% if PrivateDogClass.Bath %} {{PrivateDogClass.bath_Date}}{% else %} No {% endif %}</td>
+    <td>{{PrivateDogClass.nails}}</td>
+    <thead>
+      <th>Check out:</th><th>Follow Up Appointment:</th><th>Pick Up date/time</th>
+    </thead>
+    <tr>
+      <td>{{PrivateDogClass.check_out}}</td><td>
+        {{PrivateDogClass.follow_Up_Appointment}}
+      </td><td>{{PrivateDogClass.pick_up_time_and_date}}</td>
+    </tr>
+  </table>
+  <table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100%>
+    <thead>
+      <th>Feeding:</th>
+    </thead>
+    <tr>
+      <td>{{PrivateDogClass.feeding}}</td>
+    </tr>
+    <thead>
+      <th>Medication</th>
+    </thead>
+    <tr>
+      <td>{{PrivateDogClass.Medication}}</td>
+    </tr>
+    <thead>
+      <th>Owner Name:</th>
+    </thead>
+    <tr>
+      <td>{{PrivateClass.ClientId}}</td>
+    </tr>
+    <thead>
+      <th>Owner Phone Number:</th>
+    </thead>
+    <tr>
+      <td>{{PrivateDogClass.Contanct_Phone}}</td>
+    </tr>
+  </table>
+  <p style="page-break-after: always;">&nbsp;</p>
+  <p style="page-break-before: always;">&nbsp;</p>
+
+  <table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100%>
+    <thead>
+      <th>Dog Name:</th><th>Kennel #</th>
+    </thead>
+    <tr>
+      <td>{{PrivateDogClass.dogId}}</td><td>{{PrivateDogClass.Kennel}}</td>
+    </tr>
+  </table>
+  <table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100%>
+    <thead>
+      <th>Prong Collar:</th><th>Treats:</th><th>Ecollar</th>
+    </thead>
+    <tr>
+      <td>{{PrivateDogClass.Prong_Collar}}</td><td>{{PrivateDogClass.Treats}}</td><td>{{PrivateDogClass.Ecollar}}</td>
+    </tr>
+    <thead>
+      <th>Extra Boarding Days</th><th>Personal Protection Items </th>
+    </thead>
+    <tr>
+      <td>{{PrivateDogClass.Extra_Boarding_days}}</td><td>{{PrivateDogClass.Personal_Protection_Items}}</td>
+    </tr>
+  </table>
+  <table class = "table table-inverse table-striped table-bordered table-hover table-responsive" width=100%>
+    <thead>
+      <th>Notes/Personal Items</th>
+    </thead>
+    <tr>
+      <td>{{PrivateDogClass.Notes}}</td>
+    </tr>
+  </table>
+
+</div>
+
+{% endblock %}
